@@ -1,0 +1,20 @@
+  {
+     "name": "surebright/integration",
+     "description": "Protect customers purchases in transit and use, earn their loyalty, & profit through revenue share! ",
+     "require": {
+        "php": ">=7.1.0",
+        "magento/framework": "*",
+        "magento/module-integration": "*"
+     },
+     "type": "magento2-module",
+     "version": "1.0.0",
+     "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+           "Surebright\\Integration\\": ""
+        }
+     },
+   "minimum-stability": "stable",
+   "license": "proprietary"
+  }
+  

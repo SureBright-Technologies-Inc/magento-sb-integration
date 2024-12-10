@@ -1,0 +1,7 @@
+<integrations>
+   <integration name="SureBright Product Protection">
+      <email>support@surebright.com</email>
+      <endpoint_url>https://api2.surebright.com/site-platform/api/platform/magento/oauth/initialize</endpoint_url>
+      <identity_link_url>https://merchant.surebright.com/store/login</identity_link_url>
+   </integration>
+</integrations>
