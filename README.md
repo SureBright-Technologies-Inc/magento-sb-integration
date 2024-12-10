@@ -1,1 +1,1 @@
-# magento-sb-integration
+# Magento SureBright Integration
