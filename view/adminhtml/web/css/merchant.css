@@ -1,0 +1,67 @@
+.sb-merchant-login{
+
+    height: 60vh;
+    
+    .sb-header-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background: #3078ff;
+        color: white !important;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    
+    .sb-header-container img {
+        height: 40px;
+        margin-right: 20px;
+    }
+    
+    .sb-header-container h1 {
+        margin: 0;
+        color: white;
+        font-size: 24px !important;
+    }
+    
+    .sb-header-container p {
+        margin: 0;
+        color: #ffffff;
+    }
+    
+    .sb-header-container button {
+        background-color: white;
+        color: #3078ff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        min-width: 20%;
+    }
+    
+    .sb-left-wrapper{
+        flex: 1;
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .sb-left-wrapper{
+            flex-direction:column
+        }
+        .sb-header-container {
+            flex-direction: column;
+            text-align: center;
+        }
+    
+        .sb-header-container img {
+            margin: 0 0 20px 0;
+        }
+    
+        .sb-header-container button {
+            width: 100%;
+            margin-top: 20px;
+        }
+    }
+}

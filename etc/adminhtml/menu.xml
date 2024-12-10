@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Surebright_Integration::merchant_login"
+            title="SureBright"
+            module="Surebright_Integration"
+            sortOrder="70"
+            action="surebright/login/index"
+            resource="Magento_Backend::content"/>
+    </menu>
+</config>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<integrations>
+    <integration name="SureBright Product Protection">
+        <resources>
+            <!-- Backend Access -->
+            <resource name="Magento_Backend::admin"/>
+            <resource name="Magento_Backend::system"/>
+            <resource name="Magento_Backend::stores"/>
+            <resource name="Magento_Backend::store"/>
+ 
+            <!-- Sales Access -->
+            <resource name="Magento_Sales::sales"/>
+            <resource name="Magento_Sales::sales_operation"/>
+            <resource name="Magento_Sales::sales_creditmemo"/>
+            <resource name="Magento_Sales::actions_view"/>
+            <resource name="Magento_Sales::shipment"/>
+ 
+            <!-- Catalog Access -->
+            <resource name="Magento_Catalog::catalog"/>
+            <resource name="Magento_Catalog::products"/>
+            <resource name="Magento_Catalog::categories"/>
+            <resource name="Magento_Catalog::attributes_attributes"/>
+            <resource name="Magento_Catalog::update_attributes"/>
+            <resource name="Magento_Catalog::sets"/>
+ 
+            <!-- Cart and Quote Access -->
+            <resource name="Magento_Quote::quote"/>
+            <resource name="Magento_Quote::manage"/>
+ 
+            <!-- Customer Information -->
+            <resource name="Magento_Customer::customer"/>
+            <resource name="Magento_Customer::manage"/>
+            <resource name="Magento_Customer::online"/>
+            <resource name="Magento_Customer::group"/>
+
+            <!-- Custom Api -->
+            <resource name="Surebright_Integration::manage"/>
+        </resources>
+    </integration>
+</integrations>
