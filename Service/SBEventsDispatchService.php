@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 class SBEventsDispatchService
 {
     public const SB_SVIX_BASE_URL = "https://api.us.svix.com/api/v1/app/";
+    public const SB_PARTNER_SERVICE_BASE_URL = "https://api2.surebright.com";
     private Curl $curl;
     private SerializerInterface $serializer;
     private LoggerInterface $logger;
@@ -50,22 +51,18 @@ class SBEventsDispatchService
                 $this->logger->info("Missing one or more required tokens");
                 return;
             }
-
-            if (isset($eventDetails['payload']) && is_array($eventDetails['payload'])) {                
-                $eventDetails['payload']['sbAccessToken'] = $sbAccessToken;
-            }
             
             $headers = [
-                "Content-Type: application/json",
-                "Accept: application/json",
-                "Authorization" => "Bearer $sbSvixAccessToken"
+                "Content-Type" => "application/json",
+                "Accept" => "application/json",
+                "sb-access-token" => $sbAccessToken
             ];
             $this->curl->setHeaders($headers);
 
-            $eventDispatchUrl = self::SB_SVIX_BASE_URL . $sbSvixAppId . "/msg";
-            $eventDetails = json_encode($eventDetails);
+            $eventDispatchUrl = self::SB_PARTNER_SERVICE_BASE_URL . "/partner/api/v1/webhook/magento/events";
+            $eventDetailsJson = json_encode($eventDetails);
 
-            $this->curl->post($eventDispatchUrl, $eventDetails);
+            $this->curl->post($eventDispatchUrl, $eventDetailsJson);
 
             $status = $this->curl->getStatus();
             $responseBody = $this->curl->getBody();
