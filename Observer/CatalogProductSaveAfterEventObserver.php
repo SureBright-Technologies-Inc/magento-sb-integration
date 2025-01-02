@@ -28,11 +28,8 @@ class CatalogProductSaveAfterEventObserver implements \Magento\Framework\Event\O
             $productId = $product->getId();
             $productSku = $product->getSku();
             $eventPayload = ['productId' => $productId, 'productSku' => $productSku, "sbEventType" => "product_create_update"];
-            $body = [
-                "eventType" => "catalog_product_save_after",
-                "payload" => $eventPayload
-            ];
 
+            $body = ['data' => $eventPayload];
             $this->sbEventsDispatchService->dispatch($body);
         } catch (\Exception $exception) {
             $this->logger->info("Error in CatalogProductSaveAfterEventObserver :: execute ::  err :: " . $exception->getMessage());

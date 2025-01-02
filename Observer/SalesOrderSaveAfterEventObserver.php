@@ -28,11 +28,8 @@ class SalesOrderSaveAfterEventObserver implements \Magento\Framework\Event\Obser
             $orderId = $order->getId();
             $orderStatus = $order->getStatus();
             $eventPayload = ['orderId' => $orderId, 'orderStatus' => $orderStatus, "sbEventType" => "order_create_update"];
-            $body = [
-                "eventType" => "sales_order_save_after",
-                "payload" => $eventPayload
-            ];
 
+            $body = ['data' => $eventPayload];
             $this->sbEventsDispatchService->dispatch($body);
         } catch (\Exception $exception) {
             $this->logger->info("Error in SalesOrderSaveAfterEventObserver :: execute ::  err :: " . $exception->getMessage());
