@@ -16,7 +16,13 @@ interface SBOAuthClientInterface
      * @param string $sbSvixAccessToken
      * @param string $sbSvixAppId
      * @param bool $isActive
-     * @return ApiResponse
+     * @return string
      */
-    public function insertUpdateClientAuthDetails(string $sbIntegrationClientUUID, string $consumerKey, string $sbAccessToken, string $sbSvixAccessToken, string $sbSvixAppId, bool $isActive): ApiResponse;
+    public function insertUpdateClientAuthDetails(string $sbIntegrationClientUUID, string $consumerKey, string $sbAccessToken, string $sbSvixAccessToken, string $sbSvixAppId, bool $isActive): string;
+
+    /**
+     * List all integration auth details
+     * @return string
+     */
+    public function listIntegrationAuthDetails(): string;
 }

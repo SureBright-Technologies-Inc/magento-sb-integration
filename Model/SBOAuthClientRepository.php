@@ -77,23 +77,26 @@ class SBOAuthClientRepository implements SBOAuthClientInterface
 
     /**
      * @param SBOauthClientInterface $sbOAuthClient
-     * @return object
+     * @return string
      */
-    public function insertUpdateClientAuthDetails(string $sbIntegrationClientUUID, string $consumerKey, string $sbAccessToken, string $sbSvixAccessToken, string $sbSvixAppId, bool $isActive): ApiResponse
+    public function insertUpdateClientAuthDetails(string $sbIntegrationClientUUID, string $consumerKey, string $sbAccessToken, string $sbSvixAccessToken, string $sbSvixAppId, bool $isActive): string
     {
         try {
             // Get the Magento OAuth Consumer Id
             $consumer = $this->oauthService->loadConsumerByKey($consumerKey);
             $consumerId = $consumer->getId();
+            $response = [];
             if (!$consumerId) {
-                return new ApiResponse(true, "Cannot find consumer key :: ");
+                $response = new ApiResponse(true, "Cannot find consumer key :: ");
+                return json_encode($response);
             }
 
             // Get the Magento Integration Id
             $integration = $this->integrationService->findByConsumerId($consumerId);
             $integrationId = $integration->getId();
             if (!$integrationId) {
-                return new ApiResponse(true, "Cannot find integration id for consumer key :: ");
+                $response = new ApiResponse(true, "Cannot find integration id for consumer key :: ");
+                return json_encode($response);
             }
         
             $installer = $this->schemaSetup;
@@ -101,6 +104,7 @@ class SBOAuthClientRepository implements SBOAuthClientInterface
 
             if ($installer->tableExists(self::SB_INTEGRATION_AUTH_CLIENT_TABLE)) {
                 $tableName = $installer->getTable(self::SB_INTEGRATION_AUTH_CLIENT_TABLE);
+                $item = [];
                 if ($installer->getConnection()->isTableExists($tableName)) {
 
                     $isActiveDetailPresent = $this->deleteExistingClientAuthDetails(
@@ -110,7 +114,8 @@ class SBOAuthClientRepository implements SBOAuthClientInterface
                     );
 
                     if ($isActiveDetailPresent) {
-                        return new ApiResponse(true, "Error updating existing entry for consumer key :: ");
+                        $response = new ApiResponse(true, "Error updating existing entry for consumer key :: ");
+                        return json_encode($response);
                     }
 
                     $item = [
@@ -126,11 +131,43 @@ class SBOAuthClientRepository implements SBOAuthClientInterface
                 }
          
                 $installer->endSetup();
+                $response = new ApiResponse(false, "Inserted Store Auth Details", $item);
+                return json_encode($response);
             }
 
-            return new ApiResponse(false, "Inserted Store Auth Details");
+            $response = new ApiResponse(false, "Table not found for Integration Auth Details");
+            return json_encode($response);
         } catch (\Exception $exception) {
-            return new ApiResponse(true, "Error in insertUpdateClientAuthDetails :: err :: " . $exception->getMessage());
+            $response = new ApiResponse(true, "Error in insertUpdateClientAuthDetails :: err :: " . $exception->getMessage());
+            return json_encode($response);
+        }
+    }
+
+    /**
+     * List all integration auth details
+     * @return string
+     */
+    public function listIntegrationAuthDetails(): string
+    {
+        try {
+            $installer = $this->schemaSetup;
+            $installer->startSetup();
+            if ($installer->tableExists(self::SB_INTEGRATION_AUTH_CLIENT_TABLE)) {
+                $tableName = $installer->getTable(self::SB_INTEGRATION_AUTH_CLIENT_TABLE);
+                $connection = $installer->getConnection();
+                $entries = $connection->fetchAll(
+                    "SELECT * FROM $tableName ORDER BY updated_at DESC"
+                );
+                $installer->endSetup();
+                $response = new ApiResponse(false, 'Integration Auth Details retrieved successfully', $entries);
+                return json_encode($response);
+            }
+            $installer->endSetup();
+            $response = new ApiResponse(true, 'Table not found for Integration Auth Details');
+            return json_encode($response);
+        } catch (\Exception $exception) {
+            $response = new ApiResponse(true, "Error in listIntegrationAuthDetails :: err :: " . $exception->getMessage());
+            return json_encode($response);
         }
     }
 
@@ -143,7 +180,7 @@ class SBOAuthClientRepository implements SBOAuthClientInterface
                 $tableName = $installer->getTable(self::SB_INTEGRATION_AUTH_CLIENT_TABLE);
                 $connection = $installer->getConnection();
                 $activeEntries = $connection->fetchAll(
-                    "SELECT * FROM $tableName WHERE is_active = 1"
+                    "SELECT * FROM $tableName WHERE is_active = 1 ORDER BY updated_at DESC"
                 );
                 
                 if (empty($activeEntries)) {
