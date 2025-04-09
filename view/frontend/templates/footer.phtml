@@ -1,3 +1,18 @@
+
+<?php
+use Magento\Framework\App\ObjectManager;
+use Surebright\Integration\Helper\SureBrightLogger;
+
+$objectManager = ObjectManager::getInstance();
+$logger = $objectManager->create(SureBrightLogger::class);
+
+try {
+      $logger->logInstallationStep('footer.phtml', 'Footer template loaded successfully');
+} catch (\Exception $e) {
+    $logger->logInstallationStep('footer.phtml', 'Footer template failed to load: ', ["errorMessage" => $e->getMessage()]);
+}
+?>
+
 <script>
 window.SureBright = {
             storeId: window.location.host,

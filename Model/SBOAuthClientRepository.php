@@ -171,6 +171,42 @@ class SBOAuthClientRepository implements SBOAuthClientInterface
         }
     }
 
+    public function toggleLogger($isActive) :string 
+    {
+      try{
+            $installer = $this->schemaSetup;
+            $installer->startSetup();
+            $tableName = $installer->getTable(self::SB_INTEGRATION_AUTH_CLIENT_TABLE);
+            $connection = $installer->getConnection();
+            $connection->update($tableName, ['is_logger_active' => $isActive]);
+            $installer->endSetup();
+            $response = new ApiResponse(false, $isActive ? 'Enabled Surebright Logger' : 'Disabled Surebright Logger.');
+            return json_encode($response);
+      }catch(\Exception $exception){
+            $this->logger->info("Error in toggleLogger ::  err :: " . $exception->getMessage());
+            $response = new ApiResponse(true, "Error in toggleLogger ::  err :: " . $exception->getMessage());
+            return json_encode($response);
+      }
+    }
+
+    public function isLoggerActive(): bool
+    {
+        try {
+            $installer = $this->schemaSetup;
+            $installer->startSetup();
+            $tableName = $installer->getTable(self::SB_INTEGRATION_AUTH_CLIENT_TABLE);
+            $connection = $installer->getConnection();
+            $result = $connection->fetchRow(
+                "SELECT is_logger_active FROM $tableName LIMIT 1"
+            );
+            $installer->endSetup();
+            return !empty($result) && $result['is_logger_active'] == 1;
+        } catch (\Exception $exception) {
+            $this->logger->error("Error in isLoggerActive ::  err :: " . $exception->getMessage());
+            return false;
+        }
+    }
+
     public function getActiveClientIntegrationAuthDetails(): ApiResponse
     {
         try {

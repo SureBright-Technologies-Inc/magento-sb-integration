@@ -25,4 +25,12 @@ interface SBOAuthClientInterface
      * @return string
      */
     public function listIntegrationAuthDetails(): string;
+
+    /**
+     * Enabel/Disable Surebright Logger
+     *
+     * @param bool $isActive
+     * @return string
+     */
+    public function toggleLogger($isActive): string;
 }
