@@ -16,6 +16,5 @@ It enables merchants to offer customers comprehensive warranty options at the po
 **Customizable UI**: Tailor the appearance of warranty options to match your brand's look and feel.​
 
 **Real-Time Analytics**: Access live revenue tracking and manage warranty offers through a user-friendly merchant portal.​
-surebright.com
 
 **Dedicated Support**: Benefit from a dedicated Client Success Manager to assist with onboarding and ongoing support.
