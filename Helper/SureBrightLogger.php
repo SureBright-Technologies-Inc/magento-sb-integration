@@ -40,7 +40,7 @@ class SureBrightLogger extends AbstractHelper
         $parsedUrl = parse_url($domain);
         $domainName = $parsedUrl['host'];
         $isLoggerActive = $this->SBOAuthClientRepository->isLoggerActive();
-        if (!$this->request->getParam('sbDebug', false) || ($debugLevel == "log" && !$isLoggerActive)) {
+        if ($debugLevel == "log" && (!$this->request->getParam('sbDebug', false) || !$isLoggerActive)) {
             return;
         }
         $this->log($domainName, $message, $context, $details);
