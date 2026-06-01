@@ -33,6 +33,13 @@
             <resource name="Magento_Customer::online"/>
             <resource name="Magento_Customer::group"/>
 
+            <!-- Inventory Access -->
+            <resource name="Magento_CatalogInventory::cataloginventory"/>
+            <resource name="Magento_InventoryApi::inventory"/>
+            <resource name="Magento_InventoryApi::source"/>
+            <resource name="Magento_InventoryApi::stock"/>
+            <resource name="Magento_InventoryApi::stock_edit"/>
+
             <!-- Custom Api -->
             <resource name="Surebright_Integration::manage"/>
         </resources>
