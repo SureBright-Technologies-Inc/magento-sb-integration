@@ -38,10 +38,7 @@ class WebhookErrorRepository implements WebhookErrorRepositoryInterface
         }
 
         $searchResults = $this->searchResultsFactory->create();
-        // Pass the model object (not raw array) so SearchResultsInterface::setItems()
-        // is satisfied — REST output shape is unchanged, SOAP and any future
-        // extension_attributes consumer work correctly.
-        $searchResults->setItems([$row]);
+        $searchResults->setItems([$row->getData()]);
         $searchResults->setTotalCount(1);
 
         return $searchResults;
@@ -107,10 +104,11 @@ class WebhookErrorRepository implements WebhookErrorRepositoryInterface
 
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setTotalCount($collection->getSize());
-        // Pass model objects (not raw arrays) — satisfies the contract on
-        // SearchResultsInterface::setItems() so SOAP / future extension
-        // attributes work. REST output shape is unchanged.
-        $searchResults->setItems($collection->getItems());
+        $items = [];
+        foreach ($collection as $row) {
+            $items[] = $row->getData();
+        }
+        $searchResults->setItems($items);
 
         return $searchResults;
     }

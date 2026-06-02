@@ -7,12 +7,5 @@
             sortOrder="70"
             action="surebright/login/index"
             resource="Magento_Backend::content"/>
-        <add id="Surebright_Integration::webhook_errors"
-            title="Webhook Errors"
-            module="Surebright_Integration"
-            sortOrder="10"
-            parent="Surebright_Integration::merchant_login"
-            action="surebright/webhookerror/index"
-            resource="Surebright_Integration::webhook_errors"/>
     </menu>
 </config>
