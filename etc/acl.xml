@@ -5,7 +5,9 @@
         <resources>
             <resource id="Magento_Backend::admin">
                 <resource id="Magento_Backend::system">
-                    <resource id="Surebright_Integration::manage" title="Surebright Integration" translate="title" sortOrder="30"/>
+                    <resource id="Surebright_Integration::manage" title="Surebright Integration" translate="title" sortOrder="30">
+                        <resource id="Surebright_Integration::webhook_errors" title="Webhook Errors" translate="title" sortOrder="10"/>
+                    </resource>
                 </resource>
             </resource>
         </resources>

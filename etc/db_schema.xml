@@ -26,4 +26,27 @@
             <column name="log_id"/>
         </constraint>
     </table>
+    <table name="surebrightWebhookErrors" resource="default" engine="innodb" comment="SureBright outbound webhook delivery failures">
+        <column name="error_id" xsi:type="int" unsigned="true" nullable="false" identity="true" comment="Error ID"/>
+        <column name="event_type" xsi:type="varchar" length="64" nullable="false" comment="sbEventType from the payload"/>
+        <column name="error_type" xsi:type="varchar" length="32" nullable="false" comment="auth_error|http_error|exception"/>
+        <column name="http_status" xsi:type="smallint" unsigned="true" nullable="true" comment="HTTP status code (0 = no response received; null = no HTTP attempt)"/>
+        <column name="entity_id" xsi:type="varchar" length="64" nullable="true" comment="Product or Order ID from the payload"/>
+        <column name="entity_sku" xsi:type="varchar" length="255" nullable="true" comment="Product SKU when applicable"/>
+        <column name="store_id" xsi:type="int" unsigned="true" nullable="true" comment="Store ID (orders) or first website ID (products) from the payload"/>
+        <column name="request_url" xsi:type="text" nullable="true" comment="Destination URL"/>
+        <column name="request_payload" xsi:type="text" nullable="true" comment="Request body JSON"/>
+        <column name="response_body" xsi:type="text" nullable="true" comment="Response body from Surebright"/>
+        <column name="error_message" xsi:type="text" nullable="true" comment="Exception message or short error description"/>
+        <column name="created_at" xsi:type="timestamp" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="error_id"/>
+        </constraint>
+        <index referenceId="SUREBRIGHT_WEBHOOK_ERRORS_CREATED_AT" indexType="btree">
+            <column name="created_at"/>
+        </index>
+        <index referenceId="SUREBRIGHT_WEBHOOK_ERRORS_EVENT_TYPE" indexType="btree">
+            <column name="event_type"/>
+        </index>
+    </table>
 </schema>

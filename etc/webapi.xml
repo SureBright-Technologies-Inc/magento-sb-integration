@@ -24,4 +24,16 @@
              <resource ref="Surebright_Integration::manage"/>
         </resources>
     </route>
+    <route url="/V1/surebright/webhook-errors" method="GET">
+        <service class="Surebright\Integration\Api\WebhookErrorRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Surebright_Integration::webhook_errors"/>
+        </resources>
+    </route>
+    <route url="/V1/surebright/webhook-errors/:errorId" method="GET">
+        <service class="Surebright\Integration\Api\WebhookErrorRepositoryInterface" method="get"/>
+        <resources>
+            <resource ref="Surebright_Integration::webhook_errors"/>
+        </resources>
+    </route>
 </routes>
