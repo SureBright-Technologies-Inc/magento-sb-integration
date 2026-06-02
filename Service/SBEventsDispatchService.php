@@ -3,6 +3,7 @@
 namespace Surebright\Integration\Service;
 
 use Surebright\Integration\Model\SBOAuthClientRepository;
+use Surebright\Integration\Model\WebhookError;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\HTTP\Client\Curl;
 use Magento\Framework\Serialize\SerializerInterface;
@@ -16,28 +17,40 @@ class SBEventsDispatchService
     private SerializerInterface $serializer;
     private LoggerInterface $logger;
     private SBOAuthClientRepository $sbOAuthClientRepository;
+    private WebhookErrorRecorder $webhookErrorRecorder;
 
     public function __construct(
         Curl $curl,
         SerializerInterface $serializer,
         LoggerInterface $logger,
-        SBOAuthClientRepository $sbOAuthClientRepository
+        SBOAuthClientRepository $sbOAuthClientRepository,
+        WebhookErrorRecorder $webhookErrorRecorder
     ) {
         $this->curl = $curl;
         $this->serializer = $serializer;
         $this->logger = $logger;
         $this->sbOAuthClientRepository = $sbOAuthClientRepository;
+        $this->webhookErrorRecorder = $webhookErrorRecorder;
     }
 
 
     public function dispatch(array $eventDetails)
     {
-        try {            
+        $eventDispatchUrl = self::SB_PARTNER_SERVICE_BASE_URL . "/partner/api/v1/webhook/magento/events";
+
+        try {
             $activeIntegrationResponse = $this->sbOAuthClientRepository->getActiveClientIntegrationAuthDetails();
             $this->logger->info(json_encode($activeIntegrationResponse));
             if ($activeIntegrationResponse->isError || empty($activeIntegrationResponse->apiPayload)) {
-                // Fallback to handle error required
                 $this->logger->info("Error in dispatch ::  err :: " . $activeIntegrationResponse->message);
+                $this->safeRecord(
+                    WebhookError::ERROR_TYPE_AUTH,
+                    $eventDetails,
+                    $eventDispatchUrl,
+                    null,
+                    null,
+                    'Active integration not found: ' . ($activeIntegrationResponse->message ?? 'unknown')
+                );
                 return;
             }
 
@@ -49,9 +62,17 @@ class SBEventsDispatchService
 
             if (!$sbSvixAppId || !$sbSvixAccessToken || !$sbAccessToken) {
                 $this->logger->info("Missing one or more required tokens");
+                $this->safeRecord(
+                    WebhookError::ERROR_TYPE_AUTH,
+                    $eventDetails,
+                    $eventDispatchUrl,
+                    null,
+                    null,
+                    'Missing one or more required tokens (sb_svix_app_id / sb_svix_access_token / sb_access_token)'
+                );
                 return;
             }
-            
+
             $headers = [
                 "Content-Type" => "application/json",
                 "Accept" => "application/json",
@@ -59,7 +80,6 @@ class SBEventsDispatchService
             ];
             $this->curl->setHeaders($headers);
 
-            $eventDispatchUrl = self::SB_PARTNER_SERVICE_BASE_URL . "/partner/api/v1/webhook/magento/events";
             $eventDetailsJson = json_encode($eventDetails);
 
             $this->curl->post($eventDispatchUrl, $eventDetailsJson);
@@ -67,11 +87,51 @@ class SBEventsDispatchService
             $status = $this->curl->getStatus();
             $responseBody = $this->curl->getBody();
 
-            $response = $status . ' ' . $responseBody;
-        } catch (\Exception $exception) {
+            if ($status === 0 || $status >= 400) {
+                $this->safeRecord(
+                    WebhookError::ERROR_TYPE_HTTP,
+                    $eventDetails,
+                    $eventDispatchUrl,
+                    $status,
+                    $responseBody,
+                    $status === 0
+                        ? 'No HTTP response (network failure, blocked outbound, or DNS error)'
+                        : 'Non-success HTTP status from Surebright webhook endpoint'
+                );
+            }
+        } catch (\Throwable $exception) {
             $this->logger->info("Error in dispatch ::  err :: " . $exception->getMessage());
-            // Fallback to handle error required
+            $this->safeRecord(
+                WebhookError::ERROR_TYPE_EXCEPTION,
+                $eventDetails,
+                $eventDispatchUrl,
+                null,
+                null,
+                $exception->getMessage() . "\n" . $exception->getTraceAsString()
+            );
             return;
+        }
+    }
+
+    private function safeRecord(
+        string $errorType,
+        array $eventDetails,
+        string $eventDispatchUrl,
+        ?int $status,
+        ?string $responseBody,
+        string $errorMessage
+    ): void {
+        try {
+            $this->webhookErrorRecorder->record(
+                $errorType,
+                $eventDetails,
+                $eventDispatchUrl,
+                $status,
+                $responseBody,
+                $errorMessage
+            );
+        } catch (\Throwable $t) {
+            $this->logger->info('SBEventsDispatchService :: safeRecord swallowed error :: ' . $t->getMessage());
         }
     }
 }

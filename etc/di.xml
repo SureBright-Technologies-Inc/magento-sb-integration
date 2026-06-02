@@ -2,4 +2,19 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">    
     <preference for="Surebright\Integration\Api\SBOAuthClientInterface" type="Surebright\Integration\Model\SBOAuthClientRepository"/>
     <preference for="Surebright\Integration\Api\SureBrightLoggerInterface" type="Surebright\Integration\Model\SureBrightLoggerRepository"/>
+    <preference for="Surebright\Integration\Api\WebhookErrorRepositoryInterface" type="Surebright\Integration\Model\WebhookErrorRepository"/>
+
+    <virtualType name="SurebrightWebhookErrorsGridCollection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">surebrightWebhookErrors</argument>
+            <argument name="resourceModel" xsi:type="string">Surebright\Integration\Model\ResourceModel\WebhookError</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="surebright_webhook_errors_listing_data_source" xsi:type="string">SurebrightWebhookErrorsGridCollection</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
