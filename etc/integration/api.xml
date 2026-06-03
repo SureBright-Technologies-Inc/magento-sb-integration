@@ -39,6 +39,7 @@
             <resource name="Magento_InventoryApi::source"/>
             <resource name="Magento_InventoryApi::stock"/>
             <resource name="Magento_InventoryApi::stock_edit"/>
+            <resource name="Magento_InventoryApi::stock_source_item_assign"/>
 
             <!-- Custom Api -->
             <resource name="Surebright_Integration::manage"/>

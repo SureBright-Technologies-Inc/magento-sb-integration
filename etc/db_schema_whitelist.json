@@ -1,0 +1,55 @@
+{
+    "surebrightIntegration": {
+        "column": {
+            "sb_integration_client_uuid": true,
+            "integration_id": true,
+            "consumer_key": true,
+            "sb_access_token": true,
+            "sb_svix_access_token": true,
+            "sb_svix_app_id": true,
+            "is_active": true,
+            "is_logger_active": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "surebrightLogs": {
+        "column": {
+            "log_id": true,
+            "message": true,
+            "debugLog": true,
+            "context": true,
+            "storeId": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "surebrightWebhookErrors": {
+        "column": {
+            "error_id": true,
+            "event_type": true,
+            "error_type": true,
+            "http_status": true,
+            "entity_id": true,
+            "entity_sku": true,
+            "store_id": true,
+            "request_url": true,
+            "request_payload": true,
+            "response_body": true,
+            "error_message": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        },
+        "index": {
+            "SUREBRIGHT_WEBHOOK_ERRORS_CREATED_AT": true,
+            "SUREBRIGHT_WEBHOOK_ERRORS_EVENT_TYPE": true
+        }
+    }
+}

@@ -1,15 +1,18 @@
 .sb-merchant-login{
 
-    height: 60vh;
-    
+    min-height: 60vh;
+    max-width: 1080px;
+
     .sb-header-container {
         display: flex;
         align-items: center;
-        justify-content: space-around;
-        background: #3078ff;
+        justify-content: space-between;
+        gap: 24px;
+        background: linear-gradient(135deg, #3078ff 0%, #1f5fe0 100%);
         color: white !important;
-        padding: 20px;
-        border-radius: 10px;
+        padding: 24px 28px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(48, 120, 255, 0.25);
     }
     
     .sb-header-container img {
@@ -64,4 +67,376 @@
             margin-top: 20px;
         }
     }
+}
+
+/* ---- Status bar ---- */
+.sb-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0 10px;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.sb-status-label {
+    font-weight: 600;
+}
+
+.sb-badge {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.sb-badge-connected {
+    background: #1a7f37;
+}
+
+.sb-badge-disconnected {
+    background: #9b9b9b;
+}
+
+/* ---- Sections ---- */
+.sb-section {
+    margin-top: 20px;
+    padding: 22px 24px;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.sb-section h2 {
+    margin: 0 0 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 18px;
+}
+
+.sb-section-intro {
+    margin: 0 0 16px;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.sb-section-intro code {
+    background: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* ---- Access cards ---- */
+.sb-access-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+}
+
+.sb-access-card {
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+    padding: 16px;
+    background: #fafafa;
+}
+
+.sb-access-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.sb-access-card-head h3 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.sb-access-desc {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #777;
+}
+
+.sb-access-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.sb-granted-count {
+    font-size: 11px;
+    color: #555;
+}
+
+.sb-merchant-login .sb-test-btn {
+    display: inline-block;
+    padding: 7px 16px;
+    background: #fff;
+    color: #2563d6;
+    border: 1px solid #2563d6;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+}
+
+.sb-merchant-login .sb-test-btn:hover:not(:disabled) {
+    background: #2563d6;
+    color: #fff;
+}
+
+.sb-merchant-login .sb-test-btn:disabled {
+    opacity: .55;
+    cursor: default;
+}
+
+.sb-resource-list {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+}
+
+.sb-resource-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px dashed #e8e8e8;
+    font-size: 12px;
+}
+
+.sb-resource-list li:last-child {
+    border-bottom: none;
+}
+
+.sb-resource-name {
+    font-family: monospace;
+    color: #333;
+}
+
+.sb-pill {
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.sb-pill-granted {
+    background: #e6f4ea;
+    color: #1a7f37;
+}
+
+.sb-pill-denied {
+    background: #fdecea;
+    color: #b3261e;
+}
+
+/* ---- Test / uninstall result ---- */
+.sb-test-result {
+    display: none;
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.sb-result-ok {
+    background: #e6f4ea;
+    color: #1a7f37;
+    border: 1px solid #a7d8b4;
+}
+
+.sb-result-fail {
+    background: #fdecea;
+    color: #b3261e;
+    border: 1px solid #f1b0aa;
+}
+
+.sb-step-list {
+    margin: 8px 0 0;
+    padding-left: 18px;
+}
+
+.sb-step-list li {
+    margin: 2px 0;
+}
+
+.sb-step-ok::marker {
+    color: #1a7f37;
+}
+
+.sb-step-fail {
+    color: #b3261e;
+}
+
+/* ---- Danger zone ---- */
+.sb-danger-zone {
+    border-color: #f1b0aa;
+}
+
+.sb-uninstall-btn {
+    background: #b3261e !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.sb-uninstall-btn:hover {
+    background: #8f1d17 !important;
+}
+
+/* ---- Module version ---- */
+.sb-merchant-login .sb-version {
+    margin-top: 6px;
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+/* ---- Activation required ---- */
+.sb-badge-warning {
+    background: #b06000;
+}
+
+.sb-activation-required,
+.sb-reauth-required {
+    border-color: #f0c36d;
+    background: #fff8e6;
+}
+
+.sb-activation-required .sb-test-btn,
+.sb-reauth-required .sb-test-btn {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.sb-steps {
+    margin: 0 0 16px;
+    padding-left: 20px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.7;
+}
+
+/* ---- Diagnostics (collapsible) ---- */
+.sb-diagnostics {
+    margin-top: 20px;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.sb-merchant-login .sb-diagnostics-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 16px 22px;
+    background: #fff;
+    border: 0;
+    border-radius: 0;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.sb-merchant-login .sb-diagnostics-toggle:hover {
+    background: #f7f9fc;
+}
+
+.sb-diagnostics-caret {
+    color: #3078ff;
+    font-size: 13px;
+    line-height: 1;
+    transition: transform .15s ease;
+}
+
+.sb-diagnostics.is-open .sb-diagnostics-caret {
+    transform: rotate(90deg);
+}
+
+.sb-diagnostics-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.sb-diagnostics-hint {
+    font-size: 12px;
+    color: #888;
+}
+
+.sb-diagnostics-body {
+    display: none;
+    padding: 0 22px 18px;
+}
+
+.sb-diagnostics.is-open .sb-diagnostics-body {
+    display: block;
+}
+
+.sb-diagnostics-body .sb-section {
+    margin-top: 16px;
+    box-shadow: none;
+    border-color: #ededed;
+}
+
+.sb-diagnostics-body .sb-section:first-child {
+    margin-top: 0;
+}
+
+/* ---- Installed version (status bar) ---- */
+.sb-status-version {
+    margin-left: auto;
+    font-size: 13px;
+    color: #666;
+}
+
+.sb-status-version strong {
+    color: #222;
+}
+
+/* ---- Test detail (endpoint / status / response body) ---- */
+.sb-detail {
+    margin: 8px 0 0;
+    padding: 8px 10px;
+    background: #f3f4f6;
+    border: 1px solid #e3e3e3;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #333;
+}
+
+/* ---- Top note ---- */
+.sb-note {
+    margin: 16px 0 0;
+    padding: 10px 14px;
+    background: #eef4ff;
+    border: 1px solid #cfe0ff;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #2c4a7c;
 }
