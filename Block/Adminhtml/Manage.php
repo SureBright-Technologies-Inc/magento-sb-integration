@@ -8,7 +8,8 @@ use Magento\Integration\Api\IntegrationServiceInterface;
 use Magento\Integration\Model\Integration;
 use Magento\Authorization\Model\Acl\AclRetriever;
 use Magento\Authorization\Model\UserContextInterface;
-use Magento\Framework\Data\Form\FormKey;
+use Magento\Framework\Module\ModuleListInterface;
+use Magento\Framework\Module\PackageInfoFactory;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -24,6 +25,8 @@ use Psr\Log\LoggerInterface;
 class Manage extends Template
 {
     public const INTEGRATION_NAME = 'SureBright Product Protection';
+
+    public const MODULE_NAME = 'Surebright_Integration';
 
     /**
      * Resource groups mirroring the <resources> declared in etc/integration/api.xml.
@@ -67,15 +70,6 @@ class Manage extends Template
             ],
         ],
         [
-            'label' => 'Cart & Quote Access',
-            'test' => 'quote',
-            'description' => 'Read and manage shopping carts / quotes.',
-            'resources' => [
-                'Magento_Quote::quote',
-                'Magento_Quote::manage',
-            ],
-        ],
-        [
             'label' => 'Customer Information',
             'test' => 'customer',
             'description' => 'Read customer accounts and groups.',
@@ -115,11 +109,14 @@ class Manage extends Template
     /** @var AclRetriever */
     private $aclRetriever;
 
-    /** @var FormKey */
-    private $formKey;
-
     /** @var LoggerInterface */
     private $logger;
+
+    /** @var PackageInfoFactory */
+    private $packageInfoFactory;
+
+    /** @var ModuleListInterface */
+    private $moduleList;
 
     /** @var Integration|null */
     private $integration;
@@ -134,15 +131,17 @@ class Manage extends Template
         Context $context,
         IntegrationServiceInterface $integrationService,
         AclRetriever $aclRetriever,
-        FormKey $formKey,
         LoggerInterface $logger,
+        PackageInfoFactory $packageInfoFactory,
+        ModuleListInterface $moduleList,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->integrationService = $integrationService;
         $this->aclRetriever = $aclRetriever;
-        $this->formKey = $formKey;
         $this->logger = $logger;
+        $this->packageInfoFactory = $packageInfoFactory;
+        $this->moduleList = $moduleList;
     }
 
     /**
@@ -181,6 +180,50 @@ class Manage extends Template
     public function isConnected(): bool
     {
         return $this->getIntegration() !== null;
+    }
+
+    /**
+     * Whether the SureBright integration has been activated by an admin
+     * (i.e. exists and its status is active). A pre-configured integration is
+     * created at setup time but stays inactive until activated from
+     * System > Extensions > Integrations.
+     *
+     * @return bool
+     */
+    public function isActivated(): bool
+    {
+        $integration = $this->getIntegration();
+
+        return $integration !== null
+            && (int)$integration->getStatus() === Integration::STATUS_ACTIVE;
+    }
+
+    /**
+     * Whether an already-activated integration is missing any resource declared
+     * in etc/integration/api.xml.
+     *
+     * Config-based integrations are created once at setup:upgrade. When new
+     * resources are later added to api.xml and setup:upgrade is re-run, Magento
+     * will NOT silently re-grant the new scope to an integration that is already
+     * activated — the live OAuth token keeps the scope it was issued with until
+     * the merchant reauthorizes. Those new resources therefore show up here as
+     * "not granted", which is the signal that a reauthorization is needed.
+     *
+     * @return bool
+     */
+    public function needsReauthorization(): bool
+    {
+        if (!$this->isActivated()) {
+            return false;
+        }
+
+        foreach ($this->getResourceGroups() as $group) {
+            if ($group['granted_count'] < $group['total_count']) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -255,6 +298,63 @@ class Manage extends Template
     public function getTestUrl(): string
     {
         return $this->getUrl('surebright/access/test');
+    }
+
+    /**
+     * @return string
+     */
+    public function getWebhookTestUrl(): string
+    {
+        return $this->getUrl('surebright/webhook/test');
+    }
+
+    /**
+     * @return string
+     */
+    public function getReindexUrl(): string
+    {
+        return $this->getUrl('surebright/indexer/reindex');
+    }
+
+    /**
+     * @return string
+     */
+    public function getCachePurgeUrl(): string
+    {
+        return $this->getUrl('surebright/cache/purge');
+    }
+
+    /**
+     * URL of Magento's Integrations grid, where the merchant activates the
+     * SureBright integration.
+     *
+     * @return string
+     */
+    public function getIntegrationsGridUrl(): string
+    {
+        return $this->getUrl('adminhtml/integration/');
+    }
+
+    /**
+     * Installed version of the SureBright module, read from its composer.json
+     * (falling back to the declared module setup version).
+     *
+     * @return string
+     */
+    public function getModuleVersion(): string
+    {
+        try {
+            $version = $this->packageInfoFactory->create()->getVersion(self::MODULE_NAME);
+            if ($version !== '') {
+                return $version;
+            }
+        } catch (\Exception $e) {
+            $this->logger->error('SureBright Manage block (version): ' . $e->getMessage());
+        }
+
+        $module = $this->moduleList->getOne(self::MODULE_NAME);
+
+        return isset($module['setup_version']) ? (string)$module['setup_version'] : 'unknown';
     }
 
     /**

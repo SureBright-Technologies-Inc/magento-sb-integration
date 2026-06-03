@@ -2,7 +2,8 @@
 /** @var \Surebright\Integration\Block\Adminhtml\Manage $block */
 /** @var \Magento\Framework\Escaper $escaper */
 $groups = $block->getResourceGroups();
-$connected = $block->isConnected();
+$activated = $block->isActivated();
+$version = $block->getModuleVersion();
 ?>
 <div class="sb-merchant-login">
     <div class="sb-header-container">
@@ -10,30 +11,83 @@ $connected = $block->isConnected();
             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGUAAAAxCAYAAADDY2cuAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAXMSURBVHgB7VyLdeI6EJ3kbAG8Cp5SwSYVLK+C8CpYp4KwFUAqgFQAqSDZCuwOCBXIWwF0MKtBIzwI+cPX7KJ7jo5tRZ+RruYj2QEgYicgojJpYtICLWYmfYeIdmAm/1mQ4UMTYRBxHpjJ7pqUYjMMIjknBJuq98DEk7YMK8jS0aQdGUzGNKwIKxKUVz5hIoLkYNSc/YHVZoomuFtRt4pIwqSqfgTDTFKHiRhjuQN3pqrTsM06cjQT1Gva5l8NJuGZJ2VWQcTOZAT6cuRU9YEsB/mtHlwbeJI01iM95irmfhNsFr2N4JpQQ0iKVisUnBANCerDNYBXvgSZCzJjXWzRrnP/z96C0XANYC1YawVcGPxFcwsRl4ClfIikXCC+wHVgalLG90u4cFwFKTc3N7m55PCHIJqvC8RaU4zTvzeXxKRvnJWb9GFW2Ru0CLTnRaET118mfRr5PqABOPR9N4muT6beJ+wIT5Yfpo1jmcJOqLNnLEeru0zebFVBY4NNnxd2NiKyRha1Q73K/ZDXrr7lxseiDK2gTDz32yZGgFZmzsmtUmXSpEHdDAq/ksEZwGQszC3tjRpvUsmn3ItnUskHk/4z93dQDP4XXAZIvjtKYOVzJqhbt3LJ1HC9f8x1DOeBgh3IcLj1Kq1tJEcsK3LcILB435Di9oueMeeP+Lkjyj5icZzwKOoMcPOIofFHCGzPf/r5aE+AqU/5ZnDs5DFF3v0+cPs8ajU+0VZIJsV/W8g6cuzmdiDKu7YeoQ4suARVvi8pW2pTxaBSflbeIB0SFnqG5RiU9NnndhXLrTlfi/I60OcEN+UZivIDDGOBxYQPA7IsSuo4+cqQ1MyrvjUrLjP5L6IMVZrx4GiFKTgcXb7mnGjSHfGvJv0PViudA16t8kA7pIWaE5GvOP9HTZ/BSIsnaCjK9VmOV86rMz2u/JsoT3mkxVPY9F0fnJcH2lHiPt8QEMNHysR+T5RxUN4AXd2Qpmg5yVissi0HHWinLvraaAc3zWEi8rc0RfSlA+PpBspLWXwTqKXcdfPl1R2Lcul682g0Zioc/BMULBP7EzzsiPuNNdLth1xbPR7MOkGhQSrQjluZLjnNosH77yEyGhNUQ/F1zj50DZa3ah8y955z2B9fZburzSOz2KENFQs3pUQMmusz2En8BvsjF/dyoB3YLTqZO3IJRj4yS+416teKPuuwKMmvku2YZ2jSh89on0L2fQY2KlFe4UVFQ6rmuQxLKAZE2lmGuwZtHaK9BOdregHzNYAzwLMchJWmuExKqSmUgd2X/AvW6a8Le5XJpD1xHtlXBQ1AoaypR46UBk1mh7LJUebcTgKWrJdA9YFny3viPoPd8cpt0BjIfE7Bjp2sQhcOh9SmkWmfQvjMM5VdWX51/IM2PNVYjaGrhfUfAIQcfSIlxfqQWGMR8zdx9FPRtua8iddnWUicVMhQFRIrr/2U81NvnH7onHj15DysZP7Cm7A7tI6SVqG0b5lJL9KOgw1fx1AczFF9WtUKrF2fe/UJuRSE+3zgwUoto3zSmrFYTUso1wL6m39o+gnlYXDmy0PBAFrr0Gf5lzwGGqMO9JeJe4m5d3VW4QHsMZDi7LVLQGu65Hx/QBmw4d4Ej7OHcSvqUP9wSP9JYOVLzTrJd8G4+dHedXwwUQcsjoKcuaKjoB5ufmGyONbi8/r2d/1DiLDAzS9dfCwwcCxypH43tOQUxP/RINvOk+SOl+g6PtVE4XZwMYSI9oDbn89GX9I2cHsr0IWI9mAIGEWzVQMsoi8tfMk9nAC4/d5mBhFhsJP3I66jEhMgRGOMtqoRiIaImIM3jKyJk0jInsDwGdjeJ8Voo6xZJORAlBCT7jqRGP4RhFkkZE+g9TE6YM5qtYa1Iw0QSxvT1s72/gpUTK7GgK9B6ztGgfJEZh8ijge052KLMnLQHl6W/bt3Gs3ViYD1/xcftaMtYLlJk2SQZkXfcW7g9o8W6GOT8Rv6BZdn8My38QAAAABJRU5ErkJggg==" alt="SureBright Logo">
             <div style="width:70%">
                 <h1>Merchant Portal</h1>
-                <p>Manage your Surebright.com account - Manage Product Policy Mapping, Review Sales, Generate Invoice</p>
+                <p>Manage product protection, policies, sales and invoices.</p>
             </div>
         </div>
-        <a href="https://merchant.surebright.com/store/login" target="_blank">
-            <button type="button">Login Now</button>
-        </a>
-    </div>
-
-    <div class="sb-status-bar">
-        <span class="sb-status-label">Integration status:</span>
-        <?php if ($connected): ?>
-            <span class="sb-badge sb-badge-connected">Connected</span>
-        <?php else: ?>
-            <span class="sb-badge sb-badge-disconnected">Not connected</span>
+        <?php if ($activated): ?>
+            <a href="https://merchant.surebright.com/store/login" target="_blank">
+                <button type="button">Login Now</button>
+            </a>
         <?php endif; ?>
     </div>
+
+    <p class="sb-note">
+        <?php if ($activated): ?>
+            Log in to the merchant portal using the credentials shared by the SureBright team.
+        <?php else: ?>
+            Once authorization is complete, the SureBright team will share your merchant portal login credentials.
+        <?php endif; ?>
+    </p>
+
+    <div class="sb-status-bar">
+        <span class="sb-status-label">Status:</span>
+        <?php if ($activated): ?>
+            <span class="sb-badge sb-badge-connected">Authorized</span>
+        <?php else: ?>
+            <span class="sb-badge sb-badge-warning">Authorization pending</span>
+        <?php endif; ?>
+        <span class="sb-status-version">Installed version <strong><?= $escaper->escapeHtml($version) ?></strong></span>
+    </div>
+
+    <?php if (!$activated): ?>
+        <div class="sb-section sb-activation-required">
+            <h2>Authorization pending</h2>
+            <p class="sb-section-intro">Authorize SureBright from Magento's Integrations page to finish setup:</p>
+            <ol class="sb-steps">
+                <li>Open <strong>System &rsaquo; Extensions &rsaquo; Integrations</strong>.</li>
+                <li>Find <strong><?= $escaper->escapeHtml($block->getIntegrationName()) ?></strong> and click <strong>Activate</strong>.</li>
+                <li>Review the requested access and confirm.</li>
+            </ol>
+            <a href="<?= $escaper->escapeUrl($block->getIntegrationsGridUrl()) ?>"
+               class="sb-test-btn action-secondary">
+                Go to Integrations
+            </a>
+        </div>
+    <?php else: ?>
+
+    <?php if ($block->needsReauthorization()): ?>
+        <div class="sb-section sb-reauth-required">
+            <h2>Reauthorization required</h2>
+            <p class="sb-section-intro">
+                New permissions were added to the integration, but its active token still carries the scope
+                granted when it was first authorized — Magento does not re-grant new scopes automatically.
+                Reauthorize to issue a token with the new scope (missing permissions are flagged
+                <span class="sb-pill sb-pill-denied">not granted</span> below):
+            </p>
+            <ol class="sb-steps">
+                <li>Open <strong>System &rsaquo; Extensions &rsaquo; Integrations</strong> — the row flags that its resources changed.</li>
+                <li>Open <strong><?= $escaper->escapeHtml($block->getIntegrationName()) ?></strong>, confirm the new resources are checked, and <strong>Save</strong>.</li>
+                <li>Click <strong>Reauthorize</strong> to re-issue the token with the new scope.</li>
+            </ol>
+            <a href="<?= $escaper->escapeUrl($block->getIntegrationsGridUrl()) ?>"
+               class="sb-test-btn action-secondary">
+                Go to Integrations
+            </a>
+        </div>
+    <?php endif; ?>
+
+    <div class="sb-diagnostics">
+        <button type="button" class="sb-diagnostics-toggle" aria-expanded="false">
+            <span class="sb-diagnostics-caret" aria-hidden="true">&#9656;</span>
+            <span class="sb-diagnostics-title">Diagnostics</span>
+            <span class="sb-diagnostics-hint">Access, webhook, reindex &amp; cache checks</span>
+        </button>
+        <div class="sb-diagnostics-body">
 
     <div class="sb-section">
         <h2>Access &amp; Permissions</h2>
         <p class="sb-section-intro">
-            These are the Magento permissions granted to the SureBright integration.
-            A <span class="sb-pill sb-pill-granted">granted</span> badge means the integration's
-            role is authorized for that resource. Use <strong>Run test</strong> to perform a live,
-            read-only call and confirm each access group works.
+            Magento permissions granted to the integration. Use <strong>Run test</strong> to confirm each works.
         </p>
 
         <div class="sb-access-groups">
@@ -75,19 +129,44 @@ $connected = $block->isConnected();
         </div>
     </div>
 
-    <div class="sb-section sb-danger-zone">
-        <h2>Uninstall</h2>
+    <div class="sb-section">
+        <h2>Webhook Connectivity</h2>
         <p class="sb-section-intro">
-            This disconnects SureBright from this store: it deletes the Magento integration,
-            revokes the OAuth token &amp; consumer, and clears the stored SureBright credentials.
-            The module files remain on disk — to fully remove them, run
-            <code>bin/magento module:uninstall Surebright_Integration</code> from the server.
+            Send a test call to confirm this store can reach SureBright's webhook endpoint.
         </p>
-        <button type="button" id="sb-uninstall-btn" class="sb-uninstall-btn action-secondary">
-            Uninstall SureBright
+        <button type="button" id="sb-webhook-test-btn" class="sb-test-btn action-secondary">
+            Test webhook
         </button>
-        <div id="sb-uninstall-result" class="sb-test-result"></div>
+        <div id="sb-webhook-result" class="sb-test-result"></div>
     </div>
+
+    <div class="sb-section">
+        <h2>Reindex</h2>
+        <p class="sb-section-intro">
+            Rebuild Magento's indexes so SureBright reads up-to-date catalog, price and stock data
+            (equivalent to <code>bin/magento indexer:reindex</code>). May take a while on large catalogs.
+        </p>
+        <button type="button" id="sb-reindex-btn" class="sb-test-btn action-secondary">
+            Reindex now
+        </button>
+        <div id="sb-reindex-result" class="sb-test-result"></div>
+    </div>
+
+    <div class="sb-section">
+        <h2>Cache</h2>
+        <p class="sb-section-intro">
+            Clean the caches relevant to SureBright (integration &amp; web-API config, layout,
+            block HTML and full-page) so config, permission and storefront changes take effect.
+        </p>
+        <button type="button" id="sb-cache-purge-btn" class="sb-test-btn action-secondary">
+            Purge caches
+        </button>
+        <div id="sb-cache-purge-result" class="sb-test-result"></div>
+    </div>
+
+        </div>
+    </div>
+    <?php endif; ?>
 </div>
 
 <script>
@@ -95,7 +174,9 @@ $connected = $block->isConnected();
         'use strict';
 
         var testUrl = <?= /* @noEscape */ json_encode($block->getTestUrl()) ?>;
-        var uninstallUrl = <?= /* @noEscape */ json_encode($block->getUninstallUrl()) ?>;
+        var webhookTestUrl = <?= /* @noEscape */ json_encode($block->getWebhookTestUrl()) ?>;
+        var reindexUrl = <?= /* @noEscape */ json_encode($block->getReindexUrl()) ?>;
+        var cachePurgeUrl = <?= /* @noEscape */ json_encode($block->getCachePurgeUrl()) ?>;
         var formKey = <?= /* @noEscape */ json_encode($block->getPageFormKey()) ?>;
 
         function renderResult($el, ok, message) {
@@ -105,7 +186,31 @@ $connected = $block->isConnected();
                 .show();
         }
 
-        $('.sb-test-btn').on('click', function () {
+        function renderSteps($el, response) {
+            var html = $('<div/>').text(response.message || 'Done.');
+            if (response.steps && response.steps.length) {
+                var $ul = $('<ul class="sb-step-list"/>');
+                response.steps.forEach(function (step) {
+                    $('<li/>')
+                        .addClass(step.ok ? 'sb-step-ok' : 'sb-step-fail')
+                        .text(step.step + ': ' + step.detail)
+                        .appendTo($ul);
+                });
+                html.append($ul);
+            }
+            $el.removeClass('sb-result-ok sb-result-fail')
+                .addClass(response.success ? 'sb-result-ok' : 'sb-result-fail')
+                .html(html.html())
+                .show();
+        }
+
+        $('.sb-diagnostics-toggle').on('click', function () {
+            var $wrap = $(this).closest('.sb-diagnostics'),
+                open = $wrap.toggleClass('is-open').hasClass('is-open');
+            $(this).attr('aria-expanded', open ? 'true' : 'false');
+        });
+
+        $('.sb-test-btn[data-group]').on('click', function () {
             var $btn = $(this),
                 group = $btn.data('group'),
                 $result = $('.sb-test-result[data-result-for="' + group + '"]'),
@@ -128,41 +233,70 @@ $connected = $block->isConnected();
             });
         });
 
-        $('#sb-uninstall-btn').on('click', function () {
-            if (!window.confirm('Disconnect SureBright from this store? This revokes the integration token and clears stored credentials.')) {
-                return;
-            }
-
+        $('#sb-webhook-test-btn').on('click', function () {
             var $btn = $(this),
-                $result = $('#sb-uninstall-result'),
+                $result = $('#sb-webhook-result'),
                 original = $btn.text();
 
-            $btn.prop('disabled', true).text('Uninstalling…');
-            $result.removeClass('sb-result-ok sb-result-fail').empty().hide();
+            $btn.prop('disabled', true).text('Testing…');
+            $result.removeClass('sb-result-ok sb-result-fail').text('').hide();
 
             $.ajax({
-                url: uninstallUrl,
+                url: webhookTestUrl,
                 method: 'POST',
                 dataType: 'json',
                 data: { form_key: formKey }
             }).done(function (response) {
-                var html = $('<div/>').text(response.message || 'Done.');
-                if (response.steps && response.steps.length) {
-                    var $ul = $('<ul class="sb-step-list"/>');
-                    response.steps.forEach(function (step) {
-                        $('<li/>')
-                            .addClass(step.ok ? 'sb-step-ok' : 'sb-step-fail')
-                            .text(step.step + ': ' + step.detail)
-                            .appendTo($ul);
-                    });
-                    html.append($ul);
+                renderResult($result, !!response.success, response.message || 'No response.');
+                if (response.detail) {
+                    $('<pre class="sb-detail"/>').text(response.detail).appendTo($result);
                 }
-                $result.removeClass('sb-result-ok sb-result-fail')
-                    .addClass(response.success ? 'sb-result-ok' : 'sb-result-fail')
-                    .html(html.html())
-                    .show();
             }).fail(function () {
-                renderResult($result, false, 'Uninstall request failed. Please try again.');
+                renderResult($result, false, 'Request failed. Please try again.');
+            }).always(function () {
+                $btn.prop('disabled', false).text(original);
+            });
+        });
+
+        $('#sb-reindex-btn').on('click', function () {
+            var $btn = $(this),
+                $result = $('#sb-reindex-result'),
+                original = $btn.text();
+
+            $btn.prop('disabled', true).text('Reindexing…');
+            $result.removeClass('sb-result-ok sb-result-fail').empty().hide();
+
+            $.ajax({
+                url: reindexUrl,
+                method: 'POST',
+                dataType: 'json',
+                data: { form_key: formKey }
+            }).done(function (response) {
+                renderSteps($result, response);
+            }).fail(function () {
+                renderResult($result, false, 'Reindex request failed. Please try again.');
+            }).always(function () {
+                $btn.prop('disabled', false).text(original);
+            });
+        });
+
+        $('#sb-cache-purge-btn').on('click', function () {
+            var $btn = $(this),
+                $result = $('#sb-cache-purge-result'),
+                original = $btn.text();
+
+            $btn.prop('disabled', true).text('Purging…');
+            $result.removeClass('sb-result-ok sb-result-fail').empty().hide();
+
+            $.ajax({
+                url: cachePurgeUrl,
+                method: 'POST',
+                dataType: 'json',
+                data: { form_key: formKey }
+            }).done(function (response) {
+                renderSteps($result, response);
+            }).fail(function () {
+                renderResult($result, false, 'Cache purge request failed. Please try again.');
             }).always(function () {
                 $btn.prop('disabled', false).text(original);
             });
