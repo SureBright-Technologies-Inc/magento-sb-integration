@@ -1,7 +1,7 @@
 .sb-merchant-login{
 
-    height: 60vh;
-    
+    min-height: 60vh;
+
     .sb-header-container {
         display: flex;
         align-items: center;
@@ -64,4 +64,209 @@
             margin-top: 20px;
         }
     }
+}
+
+/* ---- Status bar ---- */
+.sb-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0 10px;
+    font-size: 14px;
+}
+
+.sb-status-label {
+    font-weight: 600;
+}
+
+.sb-badge {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.sb-badge-connected {
+    background: #1a7f37;
+}
+
+.sb-badge-disconnected {
+    background: #9b9b9b;
+}
+
+/* ---- Sections ---- */
+.sb-section {
+    margin-top: 24px;
+    padding: 20px;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.sb-section h2 {
+    margin: 0 0 6px;
+    font-size: 20px;
+}
+
+.sb-section-intro {
+    margin: 0 0 16px;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.sb-section-intro code {
+    background: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+/* ---- Access cards ---- */
+.sb-access-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px;
+}
+
+.sb-access-card {
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+    padding: 16px;
+    background: #fafafa;
+}
+
+.sb-access-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.sb-access-card-head h3 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.sb-access-desc {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #777;
+}
+
+.sb-access-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.sb-granted-count {
+    font-size: 11px;
+    color: #555;
+}
+
+.sb-test-btn {
+    cursor: pointer;
+}
+
+.sb-resource-list {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+}
+
+.sb-resource-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px dashed #e8e8e8;
+    font-size: 12px;
+}
+
+.sb-resource-list li:last-child {
+    border-bottom: none;
+}
+
+.sb-resource-name {
+    font-family: monospace;
+    color: #333;
+}
+
+.sb-pill {
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.sb-pill-granted {
+    background: #e6f4ea;
+    color: #1a7f37;
+}
+
+.sb-pill-denied {
+    background: #fdecea;
+    color: #b3261e;
+}
+
+/* ---- Test / uninstall result ---- */
+.sb-test-result {
+    display: none;
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.sb-result-ok {
+    background: #e6f4ea;
+    color: #1a7f37;
+    border: 1px solid #a7d8b4;
+}
+
+.sb-result-fail {
+    background: #fdecea;
+    color: #b3261e;
+    border: 1px solid #f1b0aa;
+}
+
+.sb-step-list {
+    margin: 8px 0 0;
+    padding-left: 18px;
+}
+
+.sb-step-list li {
+    margin: 2px 0;
+}
+
+.sb-step-ok::marker {
+    color: #1a7f37;
+}
+
+.sb-step-fail {
+    color: #b3261e;
+}
+
+/* ---- Danger zone ---- */
+.sb-danger-zone {
+    border-color: #f1b0aa;
+}
+
+.sb-uninstall-btn {
+    background: #b3261e !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.sb-uninstall-btn:hover {
+    background: #8f1d17 !important;
 }

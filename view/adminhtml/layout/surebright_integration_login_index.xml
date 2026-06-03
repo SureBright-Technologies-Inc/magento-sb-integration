@@ -6,7 +6,7 @@
     </head>
     <body>
         <referenceContainer name="content">
-            <block class="Magento\Backend\Block\Template" name="surebrigth.merchant.login" template="Surebright_Integration::merchant.phtml"/>
+            <block class="Surebright\Integration\Block\Adminhtml\Manage" name="surebrigth.merchant.login" template="Surebright_Integration::merchant.phtml"/>
         </referenceContainer>
     </body>
 </page>
