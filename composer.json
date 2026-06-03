@@ -1,7 +1,6 @@
   {
      "name": "surebright/integration",
      "description": "Protect customers purchases in transit and use, earn their loyalty, & profit through revenue share! ",
-     "version": "2.0.3",
      "require": {
         "php": ">=7.1.0",
         "magento/framework": "^1.0 || ^102.0 || ^103.0",
